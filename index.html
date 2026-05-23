@@ -40,6 +40,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tag-text{background:#f1f5f9;color:#64748b}
 .tag-judge{background:#dcfce7;color:#16a34a}
 .tag-case{background:#ede9fe;color:#7c3aed}
+.tag-knowledge{background:#fef9c3;color:#a16207}
 .card .q-time{font-size:11px;color:var(--text2)}
 
 .card .q-body{padding:8px 16px 14px}
@@ -121,8 +122,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <button class="fbtn active" data-filter="all">全部</button>
   <button class="fbtn" data-filter="choice">选择题</button>
   <button class="fbtn" data-filter="multi-choice">多选题</button>
-  <button class="fbtn" data-filter="text">知识点</button>
-  <button class="fbtn" data-filter="case-study">案例</button>
+  <button class="fbtn" data-filter="knowledge">知识卡片</button>
+  <button class="fbtn" data-filter="text">教材内容</button>
+  <button class="fbtn" data-filter="case-study">案例分析</button>
 </div>
 <div class="filters" id="timeFilters">
   <button class="fbtn" data-time="">不限时间</button>
@@ -304,8 +306,8 @@ function renderQ() {
   const isBm = state.bookmarks.includes(q.id);
   const isDone = state.done.includes(q.id);
 
-  const tagClass = q.type === 'choice' ? 'tag-choice' : q.type === 'multi-choice' ? 'tag-multi' : q.type === 'judge' ? 'tag-judge' : q.type === 'case-study' ? 'tag-case' : 'tag-text';
-  const tagText = q.type === 'choice' ? '单选' : q.type === 'multi-choice' ? '多选' : q.type === 'judge' ? '判断' : q.type === 'case-study' ? '案例' : '知识';
+  const tagClass = q.type === 'choice' ? 'tag-choice' : q.type === 'multi-choice' ? 'tag-multi' : q.type === 'judge' ? 'tag-judge' : q.type === 'case-study' ? 'tag-case' : q.type === 'knowledge' ? 'tag-knowledge' : 'tag-text';
+  const tagText = q.type === 'choice' ? '单选' : q.type === 'multi-choice' ? '多选' : q.type === 'judge' ? '判断' : q.type === 'case-study' ? '案例' : q.type === 'knowledge' ? '知识' : '文本';
 
   let html = `<div class="q-top"><span class="q-tag ${tagClass}">${tagText}</span><span class="q-time">${q.time_label || ''}</span></div>`;
   html += `<div class="q-body">`;
