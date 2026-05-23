@@ -3,407 +3,558 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>信息系统监理师 · 刷题</title>
+<title>信息系统监理师 · 刷题系统</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f5f7fa;--card:#fff;--primary:#4f46e5;--primary-light:#e0e7ff;--success:#16a34a;--danger:#dc2626;--warning:#f59e0b;--text:#1e293b;--text2:#64748b;--border:#e2e8f0;--radius:12px}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent}
 .header{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .header h1{font-size:18px;font-weight:700}
-.header .subtitle{font-size:12px;opacity:.8;margin-top:2px}
+.header .sub{font-size:12px;opacity:.8;margin-top:2px}
 
-.tabs{display:flex;gap:4px;padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:1px solid var(--border)}
-.tab{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:500;background:var(--bg);color:var(--text2);cursor:pointer;border:none;transition:all .2s}
+/* Tabs */
+.tabs{display:flex;gap:4px;padding:12px 16px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--border)}
+.tab{flex-shrink:0;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:500;background:var(--bg);color:var(--text2);cursor:pointer;border:none}
 .tab.active{background:var(--primary);color:#fff}
-.tab .badge{font-size:11px;background:rgba(255,255,255,.3);padding:1px 6px;border-radius:10px;margin-left:4px}
-.tab.active .badge{background:rgba(255,255,255,.3)}
+.tab .n{font-size:11px;opacity:.7;margin-left:4px}
 
-.filters{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff}
-.filter{flex-shrink:0;padding:6px 12px;border-radius:16px;font-size:12px;background:var(--bg);color:var(--text2);cursor:pointer;border:1px solid var(--border)}
-.filter.active{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+/* Filters */
+.filters{display:flex;gap:8px;padding:10px 16px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--border)}
+.fbtn{flex-shrink:0;padding:5px 12px;border-radius:14px;font-size:12px;background:var(--bg);color:var(--text2);cursor:pointer;border:1px solid var(--border)}
+.fbtn.active{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
 
-.progress{padding:8px 16px;font-size:12px;color:var(--text2);background:#fff;border-bottom:1px solid var(--border)}
+/* Progress bar */
+.progress-bar{height:3px;background:var(--border)}
+.progress-bar .fill{height:100%;background:var(--primary);transition:width .3s}
 
-.card{margin:12px 16px;background:var(--card);border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;transition:all .3s}
-.card .q-header{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text2)}
-.card .q-header .tag{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+/* Stats */
+.stats{display:flex;justify-content:space-around;padding:10px 16px;background:#fff;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border)}
+.stats span b{color:var(--primary);font-size:14px}
+
+/* Card */
+.card{margin:12px 16px;background:var(--card);border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+.card .q-top{padding:12px 16px 6px;display:flex;justify-content:space-between;align-items:center}
+.card .q-tag{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
 .tag-choice{background:#dbeafe;color:#2563eb}
-.tag-text{background:#f3f4f6;color:#6b7280}
-.tag-case{background:#fef3c7;color:#d97706}
-.tag-judge{background:#ede9fe;color:#7c3aed}
+.tag-multi{background:#fef3c7;color:#d97706}
+.tag-text{background:#f1f5f9;color:#64748b}
+.tag-judge{background:#dcfce7;color:#16a34a}
+.tag-case{background:#ede9fe;color:#7c3aed}
+.card .q-time{font-size:11px;color:var(--text2)}
 
-.card .q-body{padding:4px 16px 16px}
-.card .q-text{font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-all}
-.card .q-text .q-num{font-weight:700;color:var(--primary)}
+.card .q-body{padding:8px 16px 14px}
+.card .q-text{font-size:15px;line-height:1.7;margin-bottom:12px;white-space:pre-wrap;word-break:break-all}
 
-.options{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.opt-btn{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:#fff;cursor:pointer;transition:all .2s;text-align:left;font-size:14px;line-height:1.6}
-.opt-btn:active{transform:scale(.98)}
-.opt-btn .opt-label{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--text2);transition:all .2s}
-.opt-btn.correct{border-color:var(--success);background:#f0fdf4}
-.opt-btn.correct .opt-label{background:var(--success);color:#fff}
-.opt-btn.wrong{border-color:var(--danger);background:#fef2f2}
-.opt-btn.wrong .opt-label{background:var(--danger);color:#fff}
-.opt-btn.dimmed{opacity:.5}
-.opt-btn .opt-text{flex:1;white-space:pre-wrap;word-break:break-all}
+/* Options */
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:10px;border:2px solid var(--border);cursor:pointer;transition:all .2s;font-size:14px;line-height:1.5}
+.opt:active{transform:scale(.98)}
+.opt .lbl{width:24px;height:24px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:var(--text2);transition:all .2s}
+.opt.selected{border-color:var(--primary);background:var(--primary-light)}
+.opt.selected .lbl{background:var(--primary);color:#fff}
+.opt.correct{border-color:var(--success);background:#dcfce7}
+.opt.correct .lbl{background:var(--success);color:#fff}
+.opt.wrong{border-color:var(--danger);background:#fef2f2}
+.opt.wrong .lbl{background:var(--danger);color:#fff}
+.opt.disabled{pointer-events:none}
 
-.answer-section{margin-top:14px;padding:12px 14px;border-radius:10px;background:#f0fdf4;border-left:3px solid var(--success);font-size:14px;line-height:1.6}
-.answer-section .ans-label{font-weight:700;color:var(--success);margin-bottom:4px}
-.answer-section .ans-text{color:var(--text)}
-.answer-section .analysis{margin-top:8px;padding-top:8px;border-top:1px dashed #bbf7d0;color:var(--text2);font-size:13px}
+/* Answer reveal */
+.answer-box{margin:10px 16px 14px;padding:12px 16px;border-radius:10px;background:#f0fdf4;border-left:4px solid var(--success);font-size:14px;line-height:1.7;display:none}
+.answer-box.show{display:block}
+.answer-box .ans-label{font-weight:700;color:var(--success);margin-bottom:4px}
+.answer-box .ans-text{color:var(--text)}
+.answer-box .analysis{margin-top:8px;padding-top:8px;border-top:1px solid #bbf7d0;color:var(--text2);font-size:13px}
 
-.bookmark-btn{position:absolute;top:12px;right:12px;background:none;border:none;font-size:20px;cursor:pointer;padding:4px}
-.bookmark-btn.active{color:var(--warning)}
+/* Actions */
+.actions{display:flex;gap:8px;padding:8px 16px 14px}
+.act-btn{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .2s;text-align:center}
+.btn-know{background:#dcfce7;color:#16a34a}
+.btn-know:active{background:#bbf7d0}
+.btn-wrong{background:#fef2f2;color:#dc2626}
+.btn-wrong:active{background:#fecaca}
+.btn-bookmark{background:var(--primary-light);color:var(--primary)}
+.btn-bookmark:active{background:#c7d2fe}
+.btn-bookmark.saved{background:var(--primary);color:#fff}
+.btn-nav{background:var(--bg);color:var(--text2);flex:0 0 auto;width:44px;padding:10px 0}
 
-.actions{display:flex;gap:8px;margin-top:14px}
-.action-btn{flex:1;padding:10px;border-radius:10px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn-show{background:var(--primary-light);color:var(--primary)}
-.btn-next{background:var(--primary);color:#fff}
-.btn-next:active{background:#4338ca}
+/* Empty state */
+.empty{text-align:center;padding:60px 20px;color:var(--text2)}
+.empty .icon{font-size:48px;margin-bottom:16px}
+.empty p{font-size:14px;line-height:1.6}
 
-.empty-state{text-align:center;padding:60px 20px;color:var(--text2)}
-.empty-state .icon{font-size:48px;margin-bottom:16px}
-.empty-state p{font-size:14px}
+/* Wrong answer list */
+.wrong-item{margin:8px 16px;padding:12px 16px;background:var(--card);border-radius:var(--radius);box-shadow:0 1px 2px rgba(0,0,0,.06);cursor:pointer}
+.wrong-item .wi-q{font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wrong-item .wi-meta{display:flex;gap:8px;margin-top:6px;font-size:11px;color:var(--text2)}
 
-.stats-bar{display:flex;justify-content:space-around;padding:12px 16px;background:#fff;border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100}
-.stat-item{text-align:center;font-size:11px;color:var(--text2)}
-.stat-item .num{font-size:18px;font-weight:700;color:var(--text)}
+/* Nav buttons */
+.nav-row{display:flex;gap:8px;padding:8px 16px 16px}
+.nav-btn{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;text-align:center}
+.nav-prev{background:var(--bg);color:var(--text2)}
+.nav-next{background:var(--primary);color:#fff}
 
-.fade-in{animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hidden{display:none!important}
 
-.card .q-body.text-content{white-space:pre-wrap;font-size:14px;line-height:1.8;color:#374151}
-.case-content{white-space:pre-wrap;font-size:13px;line-height:1.8;color:#374151;max-height:400px;overflow-y:auto;padding:4px 16px 16px}
-
-.q-nav{display:flex;justify-content:space-between;padding:12px 16px;gap:12px}
-.q-nav button{flex:1;padding:12px;border-radius:10px;border:none;font-size:14px;font-weight:600;cursor:pointer}
-.q-nav .prev-btn{background:var(--bg);color:var(--text)}
-.q-nav .next-btn{background:var(--primary);color:#fff}
-
-/* Scrollbar */
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+/* Mobile adjustments */
+@media(max-width:400px){
+  .card .q-text{font-size:14px}
+  .opt{font-size:13px;padding:8px 12px}
+}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <h1>📐 信息系统监理师</h1>
-  <div class="subtitle">刷题系统 · 考前冲刺</div>
+  <h1>📋 信息系统监理师刷题</h1>
+  <div class="sub" id="headerSub">加载中...</div>
 </div>
 
+<!-- Tabs -->
 <div class="tabs" id="tabs">
-  <button class="tab active" data-tab="quiz" onclick="switchTab('quiz')">选择题<span class="badge" id="choiceCount"></span></button>
-  <button class="tab" data-tab="text" onclick="switchTab('text')">知识点<span class="badge" id="textCount"></span></button>
-  <button class="tab" data-tab="cases" onclick="switchTab('cases')">案例<span class="badge" id="caseCount"></span></button>
-  <button class="tab" data-tab="wrong" onclick="switchTab('wrong')">错题本<span class="badge" id="wrongCount">0</span></button>
-  <button class="tab" data-tab="bookmarks" onclick="switchTab('bookmarks')">收藏<span class="badge" id="bmCount">0</span></button>
+  <button class="tab active" data-tab="quiz">刷题<span class="n" id="quizCount"></span></button>
+  <button class="tab" data-tab="wrong">错题本<span class="n" id="wrongCount"></span></button>
+  <button class="tab" data-tab="bookmark">收藏<span class="n" id="bmCount"></span></button>
 </div>
 
-<div class="filters" id="filters"></div>
-<div class="progress" id="progress"></div>
+<!-- Filters -->
+<div class="filters" id="filters">
+  <button class="fbtn active" data-filter="all">全部</button>
+  <button class="fbtn" data-filter="choice">选择题</button>
+  <button class="fbtn" data-filter="multi-choice">多选题</button>
+  <button class="fbtn" data-filter="text">知识点</button>
+  <button class="fbtn" data-filter="case-study">案例</button>
+</div>
+<div class="filters" id="timeFilters">
+  <button class="fbtn" data-time="">不限时间</button>
+</div>
 
-<div id="content"></div>
+<!-- Progress -->
+<div class="progress-bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
+<div class="stats" id="statsBar">
+  <span>进度 <b id="statDone">0</b>/<b id="statTotal">0</b></span>
+  <span>正确率 <b id="statAcc">-</b></span>
+  <span>今日 <b id="statToday">0</b>题</span>
+</div>
 
-<div class="stats-bar" id="statsBar">
-  <div class="stat-item"><div class="num" id="statDone">0</div>已做</div>
-  <div class="stat-item"><div class="num" id="statCorrect" style="color:var(--success)">0</div>正确</div>
-  <div class="stat-item"><div class="num" id="statWrong" style="color:var(--danger)">0</div>错误</div>
-  <div class="stat-item"><div class="num" id="statRate">0%</div>正确率</div>
+<!-- Quiz view -->
+<div id="quizView">
+  <div class="card" id="card"></div>
+  <div class="nav-row">
+    <button class="nav-btn nav-prev" id="btnPrev" onclick="prevQ()">上一题</button>
+    <button class="nav-btn nav-next" id="btnNext" onclick="nextQ()">下一题</button>
+  </div>
+</div>
+
+<!-- Wrong answer view -->
+<div id="wrongView" class="hidden">
+  <div id="wrongList"></div>
+  <div class="empty hidden" id="wrongEmpty">
+    <div class="icon">🎉</div>
+    <p>没有错题，继续保持！</p>
+  </div>
+</div>
+
+<!-- Bookmark view -->
+<div id="bmView" class="hidden">
+  <div id="bmList"></div>
+  <div class="empty hidden" id="bmEmpty">
+    <div class="icon">⭐</div>
+    <p>还没有收藏的题目</p>
+  </div>
 </div>
 
 <script>
 const STORAGE_KEY = 'jlxts_v3';
 const TIME_ORDER = {'2025年5月':5,'2025年':4,'2024年11月':3,'2023年5月':2,'2019-2022年':1,'综合':0};
 
-let state = loadState();
-let exercises = [], cases = [];
-let currentTab = 'quiz', currentTimeFilter = '', currentQIdx = 0, filteredList = [];
+let allExercises = [], allCases = [];
+let filtered = [];
+let currentIdx = 0;
+let state = { wrong: [], bookmarks: [], done: [], todayCount: 0, todayDate: '' };
 
+// ========== Init ==========
 async function init() {
   try {
     const [eRes, cRes] = await Promise.all([
       fetch('data/exercises.json'),
       fetch('data/cases.json')
     ]);
-    exercises = await eRes.json();
-    cases = await cRes.json();
+    allExercises = await eRes.json();
+    allCases = await cRes.json();
   } catch(e) {
-    document.getElementById('content').innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>数据加载失败，请检查网络连接</p></div>';
+    document.getElementById('card').innerHTML = '<div class="empty"><div class="icon">❌</div><p>数据加载失败，请刷新重试</p></div>';
     return;
   }
-  
-  updateCounts();
-  buildFilters();
-  switchTab('quiz');
+
+  loadState();
+  updateTimeFilters();
+  applyFilter('all', '');
+  bindTabs();
+
+  document.getElementById('headerSub').textContent = `共 ${allExercises.length} 题 + ${allCases.length} 案例`;
+  updateStats();
+  renderQ();
 }
 
 function loadState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    state.wrong = saved.wrong || [];
+    state.bookmarks = saved.bookmarks || [];
+    state.done = saved.done || [];
+    state.todayCount = (saved.todayDate === todayStr()) ? (saved.todayCount || 0) : 0;
+  } catch(e) {}
 }
-function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
-function updateCounts() {
-  const choiceQ = exercises.filter(e => e.type === 'choice' || e.type === 'multi-choice');
-  const textQ = exercises.filter(e => e.type === 'text' || e.type === 'judge' || e.type === 'fill');
-  document.getElementById('choiceCount').textContent = choiceQ.length;
-  document.getElementById('textCount').textContent = textQ.length;
-  document.getElementById('caseCount').textContent = cases.length;
-  document.getElementById('wrongCount').textContent = (state.wrong || []).length;
-  document.getElementById('bmCount').textContent = (state.bookmarks || []).length;
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    wrong: state.wrong,
+    bookmarks: state.bookmarks,
+    done: state.done,
+    todayCount: state.todayCount,
+    todayDate: todayStr()
+  }));
+}
+
+function todayStr() { return new Date().toISOString().slice(0,10); }
+
+// ========== Tabs ==========
+function bindTabs() {
+  document.querySelectorAll('#tabs .tab').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#tabs .tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.getElementById('quizView').classList.toggle('hidden', tab !== 'quiz');
+      document.getElementById('wrongView').classList.toggle('hidden', tab !== 'wrong');
+      document.getElementById('bmView').classList.toggle('hidden', tab !== 'bookmark');
+      if (tab === 'wrong') renderWrongList();
+      if (tab === 'bookmark') renderBmList();
+    };
+  });
+
+  // Type filters
+  document.querySelectorAll('#filters .fbtn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#filters .fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter, currentFilterTime());
+    };
+  });
+}
+
+function currentFilterTime() {
+  const active = document.querySelector('#timeFilters .fbtn.active');
+  return active ? active.dataset.time : '';
+}
+
+function updateTimeFilters() {
+  const times = [...new Set(allExercises.map(e => e.time_label).filter(Boolean))];
+  times.sort((a,b) => (TIME_ORDER[b]||0) - (TIME_ORDER[a]||0));
+  const container = document.getElementById('timeFilters');
+  container.innerHTML = '<button class="fbtn active" data-time="">不限时间</button>';
+  times.forEach(t => {
+    const count = allExercises.filter(e => e.time_label === t).length;
+    const btn = document.createElement('button');
+    btn.className = 'fbtn';
+    btn.dataset.time = t;
+    btn.textContent = `${t} (${count})`;
+    container.appendChild(btn);
+  });
+  container.querySelectorAll('.fbtn').forEach(btn => {
+    btn.onclick = () => {
+      container.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(currentFilterType(), btn.dataset.time);
+    };
+  });
+}
+
+function currentFilterType() {
+  const active = document.querySelector('#filters .fbtn.active');
+  return active ? active.dataset.filter : 'all';
+}
+
+function applyFilter(type, time) {
+  filtered = allExercises.filter(e => {
+    if (type !== 'all' && e.type !== type) return false;
+    if (time && e.time_label !== time) return false;
+    return true;
+  });
+  // Sort: newest first
+  filtered.sort((a,b) => (TIME_ORDER[b.time_label]||0) - (TIME_ORDER[a.time_label]||0));
+
+  // Skip done items (if enabled)
+  currentIdx = 0;
+  if (filtered.length === 0) {
+    document.getElementById('card').innerHTML = '<div class="empty"><div class="icon">📭</div><p>该分类下暂无题目</p></div>';
+  } else {
+    renderQ();
+  }
   updateStats();
 }
 
-function buildFilters() {
-  const times = [...new Set(exercises.map(e => e.time_label).filter(Boolean))].sort((a,b) => (TIME_ORDER[b]||0)-(TIME_ORDER[a]||0));
-  const container = document.getElementById('filters');
-  container.innerHTML = '<button class="filter active" data-time="" onclick="filterTime(\'\')">全部</button>' +
-    times.map(t => `<button class="filter" data-time="${t}" onclick="filterTime('${t}')">${t}</button>`).join('');
-}
+// ========== Render Question ==========
+function renderQ() {
+  if (filtered.length === 0) return;
+  const q = filtered[currentIdx];
+  if (!q) return;
 
-function filterTime(t) {
-  currentTimeFilter = t;
-  document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b.dataset.time === t));
-  currentQIdx = 0;
-  renderList();
-}
+  const isWrong = state.wrong.includes(q.id);
+  const isBm = state.bookmarks.includes(q.id);
+  const isDone = state.done.includes(q.id);
 
-function getList() {
-  if (currentTab === 'quiz') {
-    let list = exercises.filter(e => e.type === 'choice' || e.type === 'multi-choice');
-    if (currentTimeFilter) list = list.filter(e => e.time_label === currentTimeFilter);
-    list.sort((a,b) => (TIME_ORDER[b.time_label]||0)-(TIME_ORDER[a.time_label]||0));
-    return list;
-  } else if (currentTab === 'text') {
-    let list = exercises.filter(e => e.type !== 'choice' && e.type !== 'multi-choice' && e.type !== 'case-study');
-    if (currentTimeFilter) list = list.filter(e => e.time_label === currentTimeFilter);
-    list.sort((a,b) => (TIME_ORDER[b.time_label]||0)-(TIME_ORDER[a.time_label]||0));
-    return list;
-  } else if (currentTab === 'cases') {
-    return cases;
-  } else if (currentTab === 'wrong') {
-    const ids = new Set(state.wrong || []);
-    return exercises.filter(e => ids.has(e.id));
-  } else if (currentTab === 'bookmarks') {
-    const ids = new Set(state.bookmarks || []);
-    return exercises.filter(e => ids.has(e.id)).concat(cases.filter(e => ids.has(e.id)));
-  }
-  return [];
-}
+  const tagClass = q.type === 'choice' ? 'tag-choice' : q.type === 'multi-choice' ? 'tag-multi' : q.type === 'judge' ? 'tag-judge' : q.type === 'case-study' ? 'tag-case' : 'tag-text';
+  const tagText = q.type === 'choice' ? '单选' : q.type === 'multi-choice' ? '多选' : q.type === 'judge' ? '判断' : q.type === 'case-study' ? '案例' : '知识';
 
-function switchTab(tab) {
-  currentTab = tab;
-  currentQIdx = 0;
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-  renderList();
-}
+  let html = `<div class="q-top"><span class="q-tag ${tagClass}">${tagText}</span><span class="q-time">${q.time_label || ''}</span></div>`;
+  html += `<div class="q-body">`;
+  html += `<div class="q-text">${escHtml(q.question)}</div>`;
 
-function renderList() {
-  filteredList = getList();
-  const container = document.getElementById('content');
-  
-  if (filteredList.length === 0) {
-    const msgs = {quiz:'暂无选择题',text:'暂无知识点',cases:'暂无案例',wrong:'错题本为空，继续加油！',bookmarks:'还没有收藏的题目'};
-    container.innerHTML = `<div class="empty-state"><div class="icon">${currentTab==='wrong'?'🎯':'📖'}</div><p>${msgs[currentTab]}</p></div>`;
-    document.getElementById('progress').textContent = '';
-    return;
-  }
-  
-  const progress = `第 ${currentQIdx + 1} / ${filteredList.length} 题`;
-  document.getElementById('progress').textContent = progress;
-  
-  const item = filteredList[currentQIdx];
-  const done = state.done || {};
-  const wrong = state.wrong || [];
-  const bookmarks = state.bookmarks || [];
-  const isDone = done[item.id];
-  const isBookmarked = bookmarks.includes(item.id);
-  const isCase = item.type === 'case-study';
-  const isText = item.type === 'text' || item.type === 'fill' || item.type === 'judge';
-  const hasOptions = item.options && item.options.length > 0;
-  
-  let tagClass = isCase ? 'tag-case' : hasOptions ? 'tag-choice' : 'tag-text';
-  let tagText = isCase ? '案例' : item.type === 'multi-choice' ? '多选' : hasOptions ? '单选' : item.type === 'judge' ? '判断' : '知识点';
-  
-  let html = `<div class="card fade-in">`;
-  html += `<div class="q-header"><span class="tag ${tagClass}">${tagText}</span><span>${item.time_label || ''} ${item.chapter ? '· '+item.chapter : ''}</span></div>`;
-  html += `<div class="q-body" style="position:relative">`;
-  
-  if (hasOptions) {
-    html += `<div class="q-text">${escapeHtml(item.question)}</div>`;
-    html += `<div class="options">`;
-    item.options.forEach((opt, i) => {
-      let cls = 'opt-btn';
-      if (isDone) {
-        if (opt.label === item.answer) cls += ' correct';
-        else if (state.answers && state.answers[item.id] === opt.label && opt.label !== item.answer) cls += ' wrong';
-        else cls += ' dimmed';
-      }
-      html += `<button class="${cls}" onclick="selectAnswer('${item.id}','${opt.label}',this)" ${isDone?'disabled':''}>`;
-      html += `<span class="opt-label">${opt.label}</span>`;
-      html += `<span class="opt-text">${escapeHtml(opt.text)}</span></button>`;
+  if (q.options && q.options.length > 0) {
+    html += `<div class="options" id="opts">`;
+    q.options.forEach((o, i) => {
+      html += `<div class="opt" data-label="${o.label}" onclick="selectOpt(this,'${o.label}','${escAttr(q.answer||'')}')">
+        <span class="lbl">${o.label}</span>
+        <span>${escHtml(o.text)}</span>
+      </div>`;
     });
     html += `</div>`;
-    
-    if (isDone && item.answer) {
-      html += `<div class="answer-section"><div class="ans-label">✅ 正确答案: ${escapeHtml(item.answer)}</div>`;
-      if (state.answers && state.answers[item.id] && state.answers[item.id] !== item.answer) {
-        html += `<div style="color:var(--danger);font-size:13px;margin-top:4px">❌ 你的答案: ${state.answers[item.id]}</div>`;
-      }
-      if (item.analysis) html += `<div class="analysis">💡 ${escapeHtml(item.analysis)}</div>`;
-      html += `</div>`;
-    } else if (isDone && !item.answer) {
-      html += `<div class="answer-section"><div class="ans-label">✓ 已完成</div></div>`;
-    } else {
-      html += `<div class="actions">`;
-      html += `<button class="action-btn btn-show" onclick="showAnswer('${item.id}')">显示答案</button>`;
-      html += `<button class="action-btn btn-next" onclick="nextQuestion()">下一题 →</button>`;
-      html += `</div>`;
-    }
-  } else {
-    // Text/case content
-    html += `<div class="${isCase ? 'case-content' : 'q-body text-content'}">${escapeHtml(isCase ? item.content : item.question)}</div>`;
-    
-    if (item.answer || item.analysis) {
-      html += `<div class="answer-section">`;
-      if (item.answer) html += `<div class="ans-label">✅ 参考答案</div><div class="ans-text">${escapeHtml(item.answer)}</div>`;
-      if (item.analysis) html += `<div class="analysis">💡 ${escapeHtml(item.analysis)}</div>`;
-      html += `</div>`;
-    }
-    
-    if (!isDone && !isCase) {
-      html += `<div class="actions"><button class="action-btn btn-show" onclick="markDone('${item.id}')">标记已读</button></div>`;
-    }
   }
-  
-  // Bookmark
-  html += `</div></div>`;
-  
-  // Navigation
-  html += `<div class="q-nav">`;
-  html += `<button class="prev-btn" onclick="prevQuestion()" ${currentQIdx===0?'disabled':''}>← 上一题</button>`;
-  html += `<button class="next-btn" onclick="nextQuestion()" ${currentQIdx>=filteredList.length-1?'disabled':''}>下一题 →</button>`;
+
+  if (q.answer || q.analysis) {
+    html += `<div class="answer-box" id="ansBox">
+      ${q.answer ? `<div class="ans-label">✅ 参考答案：${escHtml(q.answer)}</div>` : ''}
+      ${q.analysis ? `<div class="analysis">📖 ${escHtml(q.analysis)}</div>` : ''}
+    </div>`;
+  }
+
+  // Action buttons
+  html += `<div class="actions">`;
+  if (q.options && q.options.length > 0) {
+    html += `<button class="act-btn btn-know" onclick="markKnown()">知道了</button>`;
+    html += `<button class="act-btn btn-wrong" onclick="markWrong()">做错了</button>`;
+  }
+  html += `<button class="act-btn btn-bookmark ${isBm?'saved':''}" onclick="toggleBm()">${isBm?'⭐ 已收藏':'☆ 收藏'}</button>`;
   html += `</div>`;
-  
-  container.innerHTML = html;
-  
-  // Add padding for bottom bar
-  container.style.paddingBottom = '70px';
-}
+  html += `</div>`;
 
-function selectAnswer(qid, label, btn) {
-  if ((state.done || {})[qid]) return;
-  
-  const item = filteredList.find(e => e.id === qid) || exercises.find(e => e.id === qid);
-  if (!item) return;
-  
-  if (!state.done) state.done = {};
-  if (!state.answers) state.answers = {};
-  if (!state.wrong) state.wrong = [];
-  
-  state.done[qid] = true;
-  state.answers[qid] = label;
-  
-  const isCorrect = label === item.answer;
-  if (!isCorrect && item.answer) {
-    if (!state.wrong.includes(qid)) state.wrong.push(qid);
+  document.getElementById('card').innerHTML = html;
+  document.getElementById('progressFill').style.width = `${((currentIdx+1)/filtered.length)*100}%`;
+
+  // Show answer if already done
+  if (isDone && q.answer) {
+    showAnswer();
   }
-  
-  saveState();
-  updateCounts();
-  renderList();
+
+  updateStats();
 }
 
-function showAnswer(qid) {
-  const item = filteredList.find(e => e.id === qid) || exercises.find(e => e.id === qid);
-  if (!item) return;
-  
-  if (!state.done) state.done = {};
-  if (!state.wrong) state.wrong = [];
-  
-  state.done[qid] = true;
-  // Mark as wrong since user showed answer
-  if (item.options && item.answer && !state.wrong.includes(qid)) {
-    state.wrong.push(qid);
-  }
-  
-  saveState();
-  updateCounts();
-  renderList();
-}
-
-function markDone(qid) {
-  if (!state.done) state.done = {};
-  state.done[qid] = true;
-  saveState();
-  updateCounts();
-  nextQuestion();
-}
-
-function nextQuestion() {
-  if (currentQIdx < filteredList.length - 1) { currentQIdx++; renderList(); }
-  else { showToast('已经是最后一题了'); }
-}
-function prevQuestion() {
-  if (currentQIdx > 0) { currentQIdx--; renderList(); }
-}
-
-function updateStats() {
-  const done = state.done || {};
-  const wrong = state.wrong || [];
-  const answers = state.answers || {};
-  const doneCount = Object.keys(done).length;
-  
-  let correct = 0, wrongCount = 0;
-  for (const qid of Object.keys(done)) {
-    const item = exercises.find(e => e.id === qid);
-    if (item && item.answer && answers[qid]) {
-      if (answers[qid] === item.answer) correct++;
-      else wrongCount++;
-    }
-  }
-  
-  document.getElementById('statDone').textContent = doneCount;
-  document.getElementById('statCorrect').textContent = correct;
-  document.getElementById('statWrong').textContent = wrongCount;
-  document.getElementById('statRate').textContent = (correct + wrongCount) > 0 ? Math.round(correct/(correct+wrongCount)*100)+'%' : '0%';
-}
-
-function showToast(msg) {
-  const t = document.createElement('div');
-  t.textContent = msg;
-  t.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1e293b;color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;z-index:9999;animation:fadeIn .2s';
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 1500);
-}
-
-function escapeHtml(s) {
+function escHtml(s) {
   if (!s) return '';
-  const div = document.createElement('div');
-  div.textContent = s;
-  return div.innerHTML;
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
 }
 
-// Swipe navigation
-let touchStartX = 0;
-document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
-document.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 60) {
-    if (dx > 0) prevQuestion();
-    else nextQuestion();
-  }
-});
+// ========== Interaction ==========
+function selectOpt(el, label, correctAnswer) {
+  const opts = document.querySelectorAll('#opts .opt');
+  if (el.classList.contains('disabled')) return;
 
-// Keyboard navigation
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') prevQuestion();
-  if (e.key === 'ArrowRight') nextQuestion();
-  if (e.key >= '1' && e.key <= '4') {
-    const btn = document.querySelectorAll('.opt-btn')[parseInt(e.key)-1];
-    if (btn && !btn.disabled) btn.click();
-  }
-});
+  // Disable all
+  opts.forEach(o => o.classList.add('disabled'));
 
+  const isCorrect = correctAnswer && correctAnswer.toUpperCase().includes(label.toUpperCase());
+  if (isCorrect) {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    // Highlight correct answer
+    opts.forEach(o => {
+      if (correctAnswer && correctAnswer.toUpperCase().includes(o.dataset.label.toUpperCase())) {
+        o.classList.add('correct');
+      }
+    });
+  }
+
+  // Track
+  if (!state.done.includes(filtered[currentIdx].id)) {
+    state.done.push(filtered[currentIdx].id);
+    state.todayCount++;
+  }
+  if (!isCorrect && !state.wrong.includes(filtered[currentIdx].id)) {
+    state.wrong.push(filtered[currentIdx].id);
+  } else if (isCorrect) {
+    state.wrong = state.wrong.filter(id => id !== filtered[currentIdx].id);
+  }
+  saveState();
+
+  // Show answer
+  if (filtered[currentIdx].answer || filtered[currentIdx].analysis) {
+    showAnswer();
+  }
+  updateStats();
+
+  // Auto advance after delay
+  setTimeout(() => {
+    if (currentIdx < filtered.length - 1) {
+      currentIdx++;
+      renderQ();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }, isCorrect ? 1200 : 3000);
+}
+
+function showAnswer() {
+  const box = document.getElementById('ansBox');
+  if (box) box.classList.add('show');
+}
+
+function markKnown() {
+  const q = filtered[currentIdx];
+  if (q && !state.done.includes(q.id)) {
+    state.done.push(q.id);
+    state.todayCount++;
+  }
+  state.wrong = state.wrong.filter(id => id !== q.id);
+  saveState();
+  showAnswer();
+  updateStats();
+}
+
+function markWrong() {
+  const q = filtered[currentIdx];
+  if (q) {
+    if (!state.done.includes(q.id)) {
+      state.done.push(q.id);
+      state.todayCount++;
+    }
+    if (!state.wrong.includes(q.id)) state.wrong.push(q.id);
+  }
+  saveState();
+  showAnswer();
+  updateStats();
+}
+
+function toggleBm() {
+  const q = filtered[currentIdx];
+  if (!q) return;
+  if (state.bookmarks.includes(q.id)) {
+    state.bookmarks = state.bookmarks.filter(id => id !== q.id);
+  } else {
+    state.bookmarks.push(q.id);
+  }
+  saveState();
+  renderQ(); // Re-render to update button state
+  updateStats();
+}
+
+function prevQ() {
+  if (currentIdx > 0) {
+    currentIdx--;
+    renderQ();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+}
+
+function nextQ() {
+  if (currentIdx < filtered.length - 1) {
+    currentIdx++;
+    renderQ();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+}
+
+// ========== Wrong / Bookmark Lists ==========
+function findQ(id) {
+  return allExercises.find(e => e.id === id) || allCases.find(e => e.id === id);
+}
+
+function renderWrongList() {
+  const list = document.getElementById('wrongList');
+  const empty = document.getElementById('wrongEmpty');
+  const items = state.wrong.map(id => findQ(id)).filter(Boolean);
+  if (items.length === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  list.innerHTML = items.map(q => `
+    <div class="wrong-item" onclick="goToQ('${q.id}')">
+      <div class="wi-q">${escHtml(q.question).substring(0, 100)}...</div>
+      <div class="wi-meta">
+        <span>${q.time_label || ''}</span>
+        ${q.answer ? `<span>答案: ${escHtml(q.answer)}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('wrongCount').textContent = ` (${items.length})`;
+}
+
+function renderBmList() {
+  const list = document.getElementById('bmList');
+  const empty = document.getElementById('bmEmpty');
+  const items = state.bookmarks.map(id => findQ(id)).filter(Boolean);
+  if (items.length === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  list.innerHTML = items.map(q => `
+    <div class="wrong-item" onclick="goToQ('${q.id}')">
+      <div class="wi-q">${escHtml(q.question).substring(0, 100)}...</div>
+      <div class="wi-meta"><span>${q.time_label || ''}</span></div>
+    </div>
+  `).join('');
+  document.getElementById('bmCount').textContent = ` (${items.length})`;
+}
+
+function goToQ(id) {
+  // Switch to quiz tab
+  document.querySelectorAll('#tabs .tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-tab="quiz"]').classList.add('active');
+  document.getElementById('quizView').classList.remove('hidden');
+  document.getElementById('wrongView').classList.add('hidden');
+  document.getElementById('bmView').classList.add('hidden');
+
+  // Find in filtered
+  const idx = filtered.findIndex(e => e.id === id);
+  if (idx >= 0) {
+    currentIdx = idx;
+  } else {
+    // Not in current filter, switch to all
+    document.querySelectorAll('#filters .fbtn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+    applyFilter('all', '');
+    const idx2 = filtered.findIndex(e => e.id === id);
+    if (idx2 >= 0) currentIdx = idx2;
+  }
+  renderQ();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ========== Stats ==========
+function updateStats() {
+  const total = filtered.length;
+  const done = filtered.filter(e => state.done.includes(e.id)).length;
+  const wrongFromFiltered = filtered.filter(e => state.wrong.includes(e.id)).length;
+  const correct = done - wrongFromFiltered;
+  const acc = done > 0 ? Math.round((correct / done) * 100) + '%' : '-';
+
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statAcc').textContent = acc;
+  document.getElementById('statToday').textContent = state.todayCount;
+  document.getElementById('quizCount').textContent = ` (${allExercises.length})`;
+  document.getElementById('wrongCount').textContent = ` (${state.wrong.length})`;
+  document.getElementById('bmCount').textContent = ` (${state.bookmarks.length})`;
+}
+
+// ========== Start ==========
 init();
 </script>
 </body>
